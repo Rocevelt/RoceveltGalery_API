@@ -1,16 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
-require("dotenv").config(); // Cargar las variables de entorno
+require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Conectar a MongoDB usando la variable de entorno
+// Conectar a MongoDB usando la variable de entorno sin las opciones obsoletas
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Conectado a MongoDB Atlas");
   })

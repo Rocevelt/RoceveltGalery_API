@@ -1,17 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
+require("dotenv").config();
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Conectar a MongoDB usando la URI proporcionada por MongoDB Atlas
-mongoose.connect(
-  "mongodb+srv://roceveltgalery:6gaz5P21VsTmvq3L@rosevletgalerycluster.mz1lvjx.mongodb.net/RosevletGalery?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+// Conectar a MongoDB usando la variable de entorno
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true, // Puedes eliminar esta opción si estás usando Mongoose 6+
+    useUnifiedTopology: true, // Puedes eliminar esta opción si estás usando Mongoose 6+
+  })
+  .then(() => {
+    console.log("Conectado a MongoDB Atlas");
+  })
+  .catch((err) => {
+    console.error("Error al conectar a MongoDB Atlas:", err);
+  });
 
 const imageSchema = new mongoose.Schema({
   filename: String,
